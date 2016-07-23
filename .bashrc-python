@@ -1,0 +1,10 @@
+source .aliases
+
+function watch-tests() {
+  nosetests --with-mocha-reporter --with-watch -s .
+}
+
+function run-tests() {
+  nosetests --with-mocha-reporter -s .
+}
+
