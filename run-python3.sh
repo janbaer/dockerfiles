@@ -1,1 +1,1 @@
-docker run -it --rm  -v "$(pwd)":/home/src --name python3 janbaer/python3
+docker run -it --rm  -v "$(pwd)":/home/src janbaer/python3
