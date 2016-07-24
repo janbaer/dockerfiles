@@ -1,10 +1,8 @@
 source .aliases
 
-function watch-tests() {
-  nosetests --with-mocha-reporter --with-watch -s .
-}
+alias run-tests="nosetests --with-mocha-reporter -s ."
+alias watch-tests="nosetests --with-mocha-reporter --with-watch -s ."
 
-function run-tests() {
-  nosetests --with-mocha-reporter -s .
-}
+alias src="cd /home/src/"
 
+alias python=python3

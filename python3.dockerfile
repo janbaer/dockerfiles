@@ -13,11 +13,13 @@ RUN apk add python3 && \
     pip3 install nose nose-mocha-reporter nose-watch && \
     rm -r /root/.cache
 
-COPY .aliases .gitconfig ./root/
-COPY .gitignore-python /root/.gitignore
-COPY .bashrc-python /root/.bashrc
+COPY .aliases .gitconfig ./home/
+COPY .gitignore-python /home/.gitignore
+COPY .bashrc-python /home/.bashrc
 
-WORKDIR /home/src
+ENV HOME /home
+
+WORKDIR /home
 
 # Define bash as default command
 CMD ["/bin/bash"]
