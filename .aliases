@@ -11,7 +11,6 @@ alias gpp="git pp"
 alias gfp="git fp"
 alias gf="git fetch -p"
 alias gfp="git fp"
-alias ts="tig status"
 
 # customize the prompt
 PS1="\e[0;32m[\\w]$\e[m "

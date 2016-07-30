@@ -3,7 +3,7 @@ MAINTAINER Jan Baer
 
 # Install base packages
 RUN apk update && apk upgrade && \
-    apk add curl wget bash tree git tig
+    apk add curl wget bash tree git
 
 # Install python3 with pip
 RUN apk add python3 && \

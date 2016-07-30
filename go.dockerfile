@@ -3,7 +3,7 @@ MAINTAINER Jan Baer
 
 # Install base packages
 RUN apk update && apk upgrade && \
-    apk add curl wget bash tree git tig
+    apk add curl wget bash tree git
 
 ENV GOPATH /home/src
 ENV GOROOT /usr/lib/go
