@@ -1,4 +1,5 @@
 FROM alpine:latest
+
 MAINTAINER Jan Baer
 
 # Install base packages
@@ -50,9 +51,7 @@ go get -u -buildmode=exe -ldflags '-s -w'               \
 
   gometalinter --install --update
 
-COPY .aliases .gitconfig ./home/
-COPY .gitignore-go /home/.gitignore
-COPY .bashrc-go /home/.bashrc
+COPY .aliases .gitconfig .gitignore .bashrc ./home/
 
 ENV HOME /home
 

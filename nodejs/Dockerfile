@@ -11,9 +11,7 @@ ENV PATH $PATH:/usr/lib/node_modules/bin
 RUN npm install -g live-server karma-cli gulp typescript eslint        && \
     apk del curl tar
 
-COPY .aliases .gitconfig ./home/
-COPY .gitignore-node /home/.gitignore
-COPY .bashrc-node /home/.bashrc
+COPY .aliases .gitconfig .gitignore .bashrc ./home/
 
 ENV HOME /home
 

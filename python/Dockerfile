@@ -1,4 +1,5 @@
 FROM alpine:latest
+
 MAINTAINER Jan Baer
 
 # Install base packages
@@ -10,12 +11,10 @@ RUN apk add python3 && \
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
     pip3 install --upgrade pip setuptools && \
-    pip3 install nose nose-mocha-reporter nose-watch && \
+    pip3 install pylint nose nose-mocha-reporter nose-watch && \
     rm -r /root/.cache
 
-COPY .aliases .gitconfig ./home/
-COPY .gitignore-python /home/.gitignore
-COPY .bashrc-python /home/.bashrc
+COPY .aliases .gitconfig .gitignore .bashrc .pylintrc ./home/
 
 ENV HOME /home
 
