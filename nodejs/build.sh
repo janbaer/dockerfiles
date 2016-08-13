@@ -1,1 +1,1 @@
-docker build -f Dockerfile -t janbaer/node .
+docker build -f Dockerfile -t janbaer/nodejs .
