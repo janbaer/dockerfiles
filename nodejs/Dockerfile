@@ -8,10 +8,10 @@ RUN apk update && apk upgrade && \
 
 ENV PATH $PATH:/usr/lib/node_modules/bin
 
-RUN npm install -g live-server karma-cli gulp typescript eslint        && \
+RUN npm install -g live-server karma-cli gulp typescript eslint mocha        && \
     apk del curl tar
 
-COPY .aliases .gitconfig .gitignore .bashrc ./home/
+COPY .aliases .gitconfig .gitignore .bashrc .eslintrc.yml ./home/
 
 ENV HOME /home
 
