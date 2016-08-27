@@ -1,4 +1,4 @@
 source .aliases
 
-alias src="cd /home/src/"
+alias src="cd $GOSRC/github.com/janbaer"
 

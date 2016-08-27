@@ -1,20 +1,15 @@
-FROM alpine:latest
+FROM golang:1.7-alpine
 
 MAINTAINER Jan Baer
 
 # Install base packages
 RUN apk update && apk upgrade && \
-    apk add curl wget bash tree git
+    apk add bash curl wget tree git
 
-ENV GOPATH /home/src
-ENV GOROOT /usr/lib/go
-ENV GOBIN $GOROOT/bin
+ENV GOBIN $GOPATH/bin
+ENV GOSRC $GOPATH/src
 
-ENV PATH $PATH:$GOBIN:$GOPATH/bin
-
-RUN apk add go                                       && \
-
-go get -u -buildmode=exe -ldflags '-s -w'               \
+RUN go get -u -buildmode=exe -ldflags '-s -w'           \
   golang.org/x/tools/cmd/benchcmp                       \
   golang.org/x/tools/cmd/bundle                         \
   golang.org/x/tools/cmd/callgraph                      \
@@ -51,7 +46,9 @@ go get -u -buildmode=exe -ldflags '-s -w'               \
 
   gometalinter --install --update
 
-COPY .aliases .gitconfig .gitignore .bashrc ./home/
+RUN mkdir $GOSRC/github.com/janbaer
+
+COPY .aliases .gitconfig .gitignore .bashrc /home/
 
 ENV HOME /home
 
