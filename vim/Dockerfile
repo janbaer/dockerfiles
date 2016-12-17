@@ -62,13 +62,20 @@ RUN mkdir $HOME/.vim/bundle && cd $HOME/.vim/bundle                       && \
     git clone --depth 1 https://github.com/terryma/vim-multiple-cursors   && \
     git clone --depth 1 https://github.com/scrooloose/syntastic           && \
     git clone --depth 1 https://github.com/tpope/vim-unimpaired.git       && \
-    git clone --depth 1 https://github.com/fatih/vim-go                   && \
     git clone --depth 1 https://github.com/kopischke/vim-fetch            && \
     git clone --depth 1 https://github.com/ekalinin/Dockerfile.vim.git    && \
     git clone --depth 1 https://github.com/tpope/vim-repeat               && \
     git clone --depth 1 https://github.com/svermeulen/vim-easyclip        && \
     git clone --depth 1 https://github.com/scrooloose/nerdtree.git        && \
-    rm -rf $HOME/.vim/bundle/snipmate.vim/snippets                        && \
+    rm -rf snipmate.vim/snippets Vundle.vim/.git                             \
+           tagbar/.git vim-powerline/.git                                    \
+           vim-javascript/.git vim-css-color/.git vim-less/.git              \
+           vim-fugitive/.git vim-surround/.git nerdcommenter/.git            \
+           ctrlp.vim/.git vim-easymotion/.git emmet-vim./,git                \
+           vim-easygrep/.git snipate.vim/.git vim-editorconfig/.git          \
+           vim-dispatch/.git vim-multiple-colors/.git syntastic/.git         \
+           vim-unimpared/.git vim-fetch/.git Dockerfile.vim/.git             \
+           vim-repeat/.git vim-easyclip/.git nerdtree/.git                && \
     echo "Done with installing vim plugins"
 
     ##Build YouCompleteMe
