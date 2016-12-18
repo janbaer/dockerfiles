@@ -4,24 +4,25 @@ MAINTAINER Jan Baer
 
 ADD ocd-clean /util/
 
-RUN apk --update add zsh sudo curl rsync git tig tmux
+RUN apk --update add zsh curl git tig
 
 RUN apk add python py-pip ca-certificates               && \
     pip install --upgrade pip                           && \
     pip install httpie httpie-unixsocket
 
 # Now download and build VIM8
-RUN apk add make libxpm-dev libx11-dev libxt-dev ncurses-dev ctags build-base python-dev
+RUN apk add --virtual build-deps make libxpm-dev libx11-dev           \
+        libxt-dev ncurses-dev ctags build-base python-dev             \
+        rsync
+
 RUN git clone --depth 1 https://github.com/vim/vim.git
 WORKDIR vim
 RUN ./configure --with-features=large \
             --enable-multibyte \
             --enable-pythoninterp \
-            --with-python-config-dir=/usr/lib/python2.7/config \
+            --with-python-config-dir=/usr/lib/python2.7/config    \
             #--enable-python3interp \
             #--with-python3-config-dir=/usr/lib/python3.5/config \
-            #--enable-perlinterp \
-            #--enable-luainterp \
             --disable-gui \
             --disable-netbeans \
             --enable-cscope --prefix=/usr
@@ -67,6 +68,9 @@ RUN mkdir $HOME/.vim/bundle && cd $HOME/.vim/bundle                       && \
     git clone --depth 1 https://github.com/tpope/vim-repeat               && \
     git clone --depth 1 https://github.com/svermeulen/vim-easyclip        && \
     git clone --depth 1 https://github.com/scrooloose/nerdtree.git        && \
+    git clone --depth 1 https://github.com/zirrostig/vim-schlepp          && \
+    #Cleanup
+    sh /util/ocd-clean $HOME/.vim/bundle/  > /dev/null 2>&1               && \
     rm -rf snipmate.vim/snippets Vundle.vim/.git                             \
            tagbar/.git vim-powerline/.git                                    \
            vim-javascript/.git vim-css-color/.git vim-less/.git              \
@@ -75,29 +79,14 @@ RUN mkdir $HOME/.vim/bundle && cd $HOME/.vim/bundle                       && \
            vim-easygrep/.git snipate.vim/.git vim-editorconfig/.git          \
            vim-dispatch/.git vim-multiple-colors/.git syntastic/.git         \
            vim-unimpared/.git vim-fetch/.git Dockerfile.vim/.git             \
-           vim-repeat/.git vim-easyclip/.git nerdtree/.git                && \
+           vim-repeat/.git vim-easyclip/.git nerdtree/.git vim-schlepp/.git && \
     echo "Done with installing vim plugins"
-
-    ##Build YouCompleteMe
-#RUN apk add --virtual build-deps go llvm perl cmake python-dev build-base                                       && \
-    #git clone --depth 1  https://github.com/Valloric/YouCompleteMe.git  $HOME/.vim/bundle/YouCompleteMe         && \
-    #cd $HOME/.vim/bundle/YouCompleteMe                                                                          && \
-    #git submodule update --init --recursive                                                                     && \
-    #$HOME/.vim/bundle/YouCompleteMe/install.py --gocode-completer                                               && \
-    #cd $HOME                                                                                                    && \
-    ##Node.js deps (needed only if you're planning to mount and run jare/typescript)
-    #apk add libgcc libstdc++ libuv                                                                              && \
-    ##Cleanup
-    #rm -rf $HOME/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp /usr/lib/go  \
-           #$HOME/.vim/bundle/YouCompleteMe/third_party/ycmd/clang_includes                                      && \
-    #apk del build-deps                                                                                          && \
-    #sh /util/ocd-clean / > /dev/null 2>&1
 
 USER root
 
-RUN rm -rf /var/cache/* /var/log/* /var/tmp/*                                && \
-    mkdir /var/cache/apk                                                     && \
-    cd /usr/share/vim/vim80/                                                 && \
+#RUN apk del build-deps                                                        && \
+RUN  rm -rf /var/cache/* /var/log/* /var/tmp/*                                 && \
+    mkdir /var/cache/apk                                                      && \
     sh /util/ocd-clean / > /dev/null 2>&1
 
 USER jan
