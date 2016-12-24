@@ -1,1 +1,1 @@
-docker run -it --rm --name vim  -v "$(pwd)":/temp janbaer/alpine-latex #pdflatex /tmp/test.latex
+docker run --rm -it -v $(pwd):/temp janbaer/latex xelatex "$@"
