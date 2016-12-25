@@ -5,6 +5,8 @@ RUN apt-get update \
  && apt-get --no-install-recommends install -y \
   texlive-xetex \
   texlive-fonts-recommended \
+  texlive-lang-english \
+  texlive-lang-german \
   lmodern \
  && rm -rf /var/lib/apt/lists/*
 
