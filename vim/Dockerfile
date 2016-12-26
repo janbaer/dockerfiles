@@ -4,6 +4,8 @@ MAINTAINER Jan Baer
 
 USER root
 
+ENV PATH $PATH:/usr/lib/node_modules/bin
+
 RUN apk update                                                             && \
     ## Download runtime deps
     apk add python ctags                                                   && \
@@ -34,6 +36,8 @@ RUN apk update                                                             && \
     /home/jan/bundle/YouCompleteMe/install.py --gocode-completer --tern-completer                     && \
     rm -rf /home/jan/bundle/YouCompleteMe/third_party/ycmd/cpp /usr/lib/go                               \
            /home/jan/bundle/YouCompleteMe/third_party/ycmd/clang_includes                             && \
+    ## We need also ESLint for syntastic
+    npm install -g eslint                                                  && \
     ## Cleanup
     apk del build-deps                                                     && \
     apk add libsm libice libxt libx11 libstdc++ ncurses                    && \
