@@ -1,21 +1,14 @@
-FROM mhart/alpine-node:latest
+FROM janbaer/alpine:latest
 
 MAINTAINER Jan Baer
 
-# Install base packages
-RUN apk update && apk upgrade && \
-    apk add curl wget bash tree git tar
+USER root
 
 ENV PATH $PATH:/usr/lib/node_modules/bin
 
-RUN npm install -g live-server karma-cli gulp typescript eslint mocha        && \
-    apk del curl tar
+RUN npm install -g live-server karma-cli   \
+    gulp typescript eslint tslint mocha
 
-COPY .aliases .gitconfig .gitignore .bashrc .eslintrc.yml ./home/
+USER jan
 
-ENV HOME /home
-
-WORKDIR /home
-
-# Define bash as default command
-CMD ["/bin/bash"]
+CMD ["/bin/zsh"]
