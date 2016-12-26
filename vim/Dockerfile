@@ -1,46 +1,41 @@
-FROM alpine:3.4
+FROM janbaer/alpine:latest
 
 MAINTAINER Jan Baer
 
-ADD ocd-clean /util/
+USER root
 
-RUN apk --update add zsh curl git tig
-
-RUN apk add python py-pip ca-certificates               && \
-    pip install --upgrade pip                           && \
-    pip install httpie httpie-unixsocket
-
-# Now download and build VIM8
-RUN apk add --virtual build-deps make libxpm-dev libx11-dev           \
-        libxt-dev ncurses-dev ctags build-base python-dev             \
-        rsync
-
-RUN git clone --depth 1 https://github.com/vim/vim.git
-WORKDIR vim
-RUN ./configure --with-features=large \
-            --enable-multibyte \
-            --enable-pythoninterp \
-            --with-python-config-dir=/usr/lib/python2.7/config    \
-            #--enable-python3interp \
-            #--with-python3-config-dir=/usr/lib/python3.5/config \
-            --disable-gui \
-            --disable-netbeans \
-            --enable-cscope --prefix=/usr
-RUN make VIMRUNTIMEDIR=/usr/share/vim/vim80
-RUN make install
-
-ENV HOME /home/jan
-
-RUN addgroup develop                                    && \
-    adduser -h ${HOME} -s /bin/zh -S -D -G develop jan
+RUN apk update                                                             && \
+    ## Download runtime deps
+    apk add python                                                         && \
+    ## Download build deps
+    apk add --virtual build-deps make libxpm-dev libx11-dev                   \
+        libxt-dev ncurses-dev ctags build-base python-dev                  && \
+        #lua5.1 lua5.1-dev                                                     \
+    ## Build VIM8
+    cd /tmp                                                                && \
+    git clone --depth 1 https://github.com/vim/vim.git                     && \
+    cd /tmp/vim                                                            && \
+    ./configure --with-features=large                                         \
+            --enable-fail-if-missing                                          \
+            --enable-multibyte                                                \
+            #--enable-luainterp                                                \
+            --enable-pythoninterp                                             \
+            --with-python-config-dir=/usr/lib/python2.7/config                \
+            #--enable-python3interp                                            \
+            #--with-python3-config-dir=/usr/lib/python3.5/config               \
+            --disable-gui                                                     \
+            --disable-netbeans                                                \
+            --enable-cscope --prefix=/usr                                  && \
+    make VIMRUNTIMEDIR=/usr/share/vim/vim80                                && \
+    make install                                                           && \
+    ## Cleanup
+    apk del build-deps                                                     && \
+    apk add libsm libice libxt libx11 ncurses                              && \
+    rm -rf /var/cache/* /var/log/* /var/tmp/*                              && \
+    mkdir /var/cache/apk                                                   && \
+    sh /util/ocd-clean / > /dev/null 2>&1
 
 USER jan
-
-RUN git clone --depth 1 https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh && \
-    git clone git://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-
-RUN git clone --depth 1 https://github.com/janbaer/dotfiles $HOME/dotfiles && \
-    sh -c "$HOME/dotfiles/sync.sh"
 
 RUN mkdir $HOME/.vim/bundle && cd $HOME/.vim/bundle                       && \
     git clone --depth 1 https://github.com/VundleVim/Vundle.vim           && \
@@ -69,8 +64,6 @@ RUN mkdir $HOME/.vim/bundle && cd $HOME/.vim/bundle                       && \
     git clone --depth 1 https://github.com/svermeulen/vim-easyclip        && \
     git clone --depth 1 https://github.com/scrooloose/nerdtree.git        && \
     git clone --depth 1 https://github.com/zirrostig/vim-schlepp          && \
-    #Cleanup
-    sh /util/ocd-clean $HOME/.vim/bundle/  > /dev/null 2>&1               && \
     rm -rf snipmate.vim/snippets Vundle.vim/.git                             \
            tagbar/.git vim-powerline/.git                                    \
            vim-javascript/.git vim-css-color/.git vim-less/.git              \
@@ -79,17 +72,8 @@ RUN mkdir $HOME/.vim/bundle && cd $HOME/.vim/bundle                       && \
            vim-easygrep/.git snipate.vim/.git vim-editorconfig/.git          \
            vim-dispatch/.git vim-multiple-colors/.git syntastic/.git         \
            vim-unimpared/.git vim-fetch/.git Dockerfile.vim/.git             \
-           vim-repeat/.git vim-easyclip/.git nerdtree/.git vim-schlepp/.git && \
-    echo "Done with installing vim plugins"
-
-USER root
-
-#RUN apk del build-deps                                                        && \
-RUN  rm -rf /var/cache/* /var/log/* /var/tmp/*                                 && \
-    mkdir /var/cache/apk                                                      && \
-    sh /util/ocd-clean / > /dev/null 2>&1
-
-USER jan
+           vim-repeat/.git vim-easyclip/.git nerdtree/.git                   \
+           vim-schlepp/.git
 
 RUN mkdir $HOME/projects
 
