@@ -6,11 +6,10 @@ USER root
 
 RUN apk update                                                             && \
     ## Download runtime deps
-    apk add python                                                         && \
+    apk add python ctags                                                   && \
     ## Download build deps
-    apk add --virtual build-deps make libxpm-dev libx11-dev                   \
-        libxt-dev ncurses-dev ctags build-base python-dev                  && \
-        #lua5.1 lua5.1-dev                                                     \
+    apk add --virtual build-deps go make libxpm-dev libx11-dev                \
+        libxt-dev ncurses-dev cmake build-base python-dev llvm             && \
     ## Build VIM8
     cd /tmp                                                                && \
     git clone --depth 1 https://github.com/vim/vim.git                     && \
@@ -28,9 +27,16 @@ RUN apk update                                                             && \
             --enable-cscope --prefix=/usr                                  && \
     make VIMRUNTIMEDIR=/usr/share/vim/vim80                                && \
     make install                                                           && \
+    ## YouCompleteMe
+    git clone --depth 1 https://github.com/Valloric/YouCompleteMe.git /home/jan/bundle/YouCompleteMe/ && \
+    cd /home/jan/bundle/YouCompleteMe                                                                 && \
+    git submodule update --init --recursive                                                           && \
+    /home/jan/bundle/YouCompleteMe/install.py --gocode-completer --tern-completer                     && \
+    rm -rf /home/jan/bundle/YouCompleteMe/third_party/ycmd/cpp /usr/lib/go                               \
+           /home/jan/bundle/YouCompleteMe/third_party/ycmd/clang_includes                             && \
     ## Cleanup
     apk del build-deps                                                     && \
-    apk add libsm libice libxt libx11 ncurses                              && \
+    apk add libsm libice libxt libx11 libstdc++ ncurses                    && \
     rm -rf /var/cache/* /var/log/* /var/tmp/*                              && \
     mkdir /var/cache/apk                                                   && \
     sh /util/ocd-clean / > /dev/null 2>&1
