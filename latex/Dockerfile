@@ -1,13 +1,14 @@
-FROM debian:jessie
+FROM bitnami/minideb:jessie
+
 MAINTAINER Jan Baer
 
 RUN apt-get update \
- && apt-get --no-install-recommends install -y \
-  texlive-xetex \
-  texlive-fonts-recommended \
-  texlive-lang-english \
-  texlive-lang-german \
-  lmodern \
+ && apt-get --fix-missing --no-install-recommends install -y \
+  texlive-xetex                                               \
+  texlive-fonts-recommended                                   \
+  texlive-lang-english                                        \
+  texlive-lang-german                                         \
+  lmodern                                                     \
  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /temp
