@@ -1,1 +1,1 @@
-docker run -it --rm --name alpine janbaer/alpine
+docker run -it --rm --name alpine -v "${HOME}/.ssh:/home/jan/.ssh" janbaer/alpine
