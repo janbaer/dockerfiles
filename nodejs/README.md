@@ -1,5 +1,7 @@
 # Dockerfiles NodeJS
 
+[![](https://images.microbadger.com/badges/image/janbaer/nodejs.svg)](http://microbadger.com/images/janbaer/nodejs)
+
 This repository contains file for creating a dockerfile
 with that I can use NodeJS in docker sandbox
 

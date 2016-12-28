@@ -1,5 +1,7 @@
 # Dockerfiles VIM
 
+[![](https://images.microbadger.com/badges/image/janbaer/vim.svg)](http://microbadger.com/images/janbaer/vim)
+
 This repository contains file for building a Docker image for VIM.
 The docker image is building VIM8 from it's Git source.
 
