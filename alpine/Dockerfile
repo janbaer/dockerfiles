@@ -4,7 +4,7 @@ MAINTAINER Jan Baer
 
 ADD ocd-clean /util/
 
-RUN apk --update add zsh git tig rsync
+RUN apk --update add zsh git tig rsync openssh
 
 ENV HOME /home/jan
 
