@@ -6,7 +6,7 @@ USER root
 
 ENV PATH $PATH:/usr/lib/node_modules/bin
 
-RUN npm install -g live-server karma-cli   \
+RUN npm install -g yarn live-server   \
     gulp typescript eslint tslint mocha
 
 USER jan
