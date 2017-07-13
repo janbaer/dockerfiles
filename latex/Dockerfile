@@ -13,4 +13,4 @@ RUN apt-get update \
 
 WORKDIR /temp
 
-#ENTRYPOINT ["xelatex"]
+CMD ["xelatex"]
