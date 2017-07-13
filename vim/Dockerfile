@@ -75,6 +75,12 @@ RUN mkdir $HOME/.vim/bundle && cd $HOME/.vim/bundle                       && \
     git clone --depth 1 https://github.com/scrooloose/nerdtree.git        && \
     git clone --depth 1 https://github.com/zirrostig/vim-schlepp          && \
     git clone --depth 1 https://github.com/leafgarland/typescript-vim     && \
+    git clone --depth 1 https://github.com/svermeulen/vim-easyclip        && \
+    git clone --depth 1 https://github.com/zirrostig/vim-schlepp          && \
+    git clone --depth 1 https://github.com/szw/vim-maximizer              && \
+    git clone --depth 1 https://github.com/mitermayer/vim-prettier        && \
+    git clone --depth 1 https://github.com/junegunn/fzf                   && \
+    git clone --depth 1 https://github.com/junegunn/fzf.vim               && \
     rm -rf snipmate.vim/snippets Vundle.vim/.git                             \
            tagbar/.git vim-powerline/.git                                    \
            vim-javascript/.git vim-css-color/.git vim-less/.git              \
@@ -84,7 +90,8 @@ RUN mkdir $HOME/.vim/bundle && cd $HOME/.vim/bundle                       && \
            vim-dispatch/.git vim-multiple-colors/.git syntastic/.git         \
            vim-unimpared/.git vim-fetch/.git Dockerfile.vim/.git             \
            vim-repeat/.git vim-easyclip/.git nerdtree/.git                   \
-           vim-schlepp/.git typescript-vim/.git
+           vim-schlepp/.git typescript-vim/.git vim-easyclip/.git            \
+           vim-maximizer/.git vim-prettier/.git fzf/.git fzf.vim/git
 
 RUN mkdir $HOME/projects
 
