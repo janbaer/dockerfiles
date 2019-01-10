@@ -8,6 +8,7 @@ RUN apt-get update \
   texlive                                                     \
   texlive-lang-english                                        \
   texlive-lang-german                                         \
+  texlive-pictures                                            \
   # texlive-luatex                                              \
   # texlive-xetex                                               \
   wget                                                        \
