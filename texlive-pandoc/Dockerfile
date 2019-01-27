@@ -13,12 +13,14 @@ RUN apt-get update \
   texlive-lang-german                                         \
   texlive-pictures                                            \
   texlive-latex-extra                                         \
+  # texlive-fonts-extra                                         \
   # texlive-luatex                                              \
   # texlive-xetex                                               \
   build-essential                                             \
   fontconfig                                                  \
   unzip                                                       \
   wget                                                        \
+  graphviz                                                    \
   && update-ca-certificates                                   \
   && rm -rf /var/lib/apt/lists/*
 
