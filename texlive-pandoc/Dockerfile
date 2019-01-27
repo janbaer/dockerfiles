@@ -1,4 +1,5 @@
-FROM ubuntu:18.10
+# Ubuntu 18.10 base image
+FROM ubuntu:cosmic
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -35,5 +36,9 @@ WORKDIR /tmp
 RUN wget https://github.com/jgm/pandoc/releases/download/2.5/pandoc-2.5-1-amd64.deb && \
     dpkg -i pandoc-2.5-1-amd64.deb                                                  && \
     rm pandoc-2.5-1-amd64.deb
+
+RUN useradd -s /bin/bash --uid 1000 jan
+
+USER jan
 
 CMD ["/bin/sh"]
