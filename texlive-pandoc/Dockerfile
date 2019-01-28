@@ -27,9 +27,10 @@ RUN apt-get update \
 
 # ADD ./fonts/*.otf /usr/share/fonts/opentype/
 # RUN fc-cache -fv
+
 WORKDIR /tmp
 
-ADD ./getFiraFont.sh /tmp/getFiraFont.sh
+ADD getFiraFont.sh /tmp/
 RUN bash -c /tmp/getFiraFont.sh
 
 RUN wget https://github.com/jgm/pandoc/releases/download/2.5/pandoc-2.5-1-amd64.deb && \
