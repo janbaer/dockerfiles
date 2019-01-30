@@ -1,12 +1,13 @@
 # Ubuntu 18.10 base image
 FROM ubuntu:cosmic
 
-ENV DEBIAN_FRONTEND noninteractive
+MAINTAINER Jan Baer
 
 ARG DOCKER_USER="jan"
 ARG DOCKER_ID=1000
 
-MAINTAINER Jan Baer
+ENV DEBIAN_FRONTEND noninteractive
+ENV HOME=/home/$DOCKER_USER
 
 RUN apt-get update \
  && apt-get --fix-missing --no-install-recommends install -y  \
@@ -53,8 +54,17 @@ RUN wget https://github.com/jgm/pandoc/releases/download/2.5/pandoc-2.5-1-amd64.
     dpkg -i pandoc-2.5-1-amd64.deb                                                  && \
     rm pandoc-2.5-1-amd64.deb
 
-RUN useradd -s /bin/bash --uid $DOCKER_ID $DOCKER_USER
+RUN adduser --home /home/$DOCKER_USER               \
+            --shell /bin/bash --disabled-password   \
+            --uid $DOCKER_ID --quiet                \
+            $DOCKER_USER
 
 USER $DOCKER_USER
 
-CMD ["/bin/sh"]
+RUN mkdir -p $HOME/.pandoc/templates
+
+ADD ./pandoc-templates/ $HOME/.pandoc/templates
+
+WORKDIR /tmp
+
+CMD ["/bin/bash"]
