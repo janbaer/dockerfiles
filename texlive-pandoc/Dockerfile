@@ -29,9 +29,6 @@ RUN apt-get update \
   && update-ca-certificates                                   \
   && rm -rf /var/lib/apt/lists/*
 
-# ADD ./fonts/*.otf /usr/share/fonts/opentype/
-# RUN fc-cache -fv
-
 WORKDIR /tmp
 
 RUN wget "https://bboxtype.com/downloads/Fira/Download_Folder_FiraSans_4301.zip"    && \
@@ -64,7 +61,5 @@ USER $DOCKER_USER
 RUN mkdir -p $HOME/.pandoc/templates
 
 ADD ./pandoc-templates/ $HOME/.pandoc/templates
-
-WORKDIR /tmp
 
 CMD ["/bin/bash"]
