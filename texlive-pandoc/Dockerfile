@@ -13,14 +13,7 @@ RUN apt-get update \
  && apt-get --fix-missing --no-install-recommends install -y  \
   ca-certificates                                             \
   lmodern                                                     \
-  texlive                                                     \
-  texlive-lang-english                                        \
-  texlive-lang-german                                         \
-  texlive-pictures                                            \
-  texlive-latex-extra                                         \
-  # texlive-fonts-extra                                         \
-  # texlive-luatex                                              \
-  # texlive-xetex                                               \
+  texlive-full                                                \
   build-essential                                             \
   fontconfig                                                  \
   unzip                                                       \
@@ -47,13 +40,14 @@ RUN wget "https://bboxtype.com/downloads/Fira/Download_Folder_FiraSans_4301.zip"
     rm -rf Download_Folder_FiraSans_4301 Fira_Mono_3_2                              && \
     fc-cache -fv
 
-RUN wget https://github.com/jgm/pandoc/releases/download/2.5/pandoc-2.5-1-amd64.deb && \
-    dpkg -i pandoc-2.5-1-amd64.deb                                                  && \
-    rm pandoc-2.5-1-amd64.deb
+RUN wget https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-1-amd64.deb && \
+    dpkg -i pandoc-2.7.2-1-amd64.deb                                                    && \
+    rm pandoc-2.7.2-1-amd64.deb
 
-RUN adduser --home /home/$DOCKER_USER               \
-            --shell /bin/bash --disabled-password   \
-            --uid $DOCKER_ID --quiet                \
+RUN useradd --home-dir /home/$DOCKER_USER           \
+            --create-home                           \
+            --uid $DOCKER_ID                        \
+            --shell /bin/bash                       \
             $DOCKER_USER
 
 USER $DOCKER_USER
