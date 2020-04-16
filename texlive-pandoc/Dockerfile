@@ -1,5 +1,5 @@
-# Ubuntu 18.10 base image
-FROM ubuntu:cosmic
+# Ubuntu 19.10 base image
+FROM ubuntu:eoan
 
 MAINTAINER Jan Baer
 
@@ -19,6 +19,7 @@ RUN apt-get update \
   unzip                                                       \
   wget                                                        \
   graphviz                                                    \
+  calibre                                                     \
   && update-ca-certificates                                   \
   && rm -rf /var/lib/apt/lists/*
 
